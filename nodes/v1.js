@@ -21,8 +21,8 @@ module.exports = function (RED) {
     if (!msg.payload) {
       return 'Missing property: msg.payload';
     }
-    if ('string' !== typeof(msg.payload)) {
-      return 'submitted msg.payload is not text';
+    if ('object' !== typeof(msg.payload)) {
+      return 'submitted msg.payload is not an object';
     }
     if (!msg.facebookevent) {
       return  'Missing property: msg.facebookevent';
@@ -40,10 +40,10 @@ module.exports = function (RED) {
     return '';
   }
 
-  function sendReplyMessage(node, token, to, text) {
+  function sendReplyMessage(node, token, to, message) {
     var messageData = {
       recipient: {id: to},
-      message: {text: text}
+      message: message
     };
 
     request({
